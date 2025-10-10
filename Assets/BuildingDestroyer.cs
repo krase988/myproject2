@@ -66,7 +66,7 @@ public class BuildingDestroyer : MonoBehaviour
         //Debug.Log($"GridCubes count: {gridCubes.Count}");
 
         prevSelectedCubes.Clear();
-        Debug.Log("ActivateDeleteMode foreach: " + gridCubes.Count);
+        //Debug.Log("ActivateDeleteMode foreach: " + gridCubes.Count);
         foreach (var cube in gridCubes)
         {
             //Debug.Log($"Cube state: {cube.IsSelected()}");
@@ -103,7 +103,10 @@ public class BuildingDestroyer : MonoBehaviour
             // 삭제모드 진입 전 선택(빨간색)이었던 큐브만 다시 선택 및 성장 재개
         foreach (var cube in prevSelectedCubes)
         {
-            cube.SetSelected(true);
+            Debug.Log("Restoring selection on: " + cube.name);
+            Debug.Log("selectedGridCube: " + (selectedGridCube != null ? selectedGridCube.name : "null"));
+            if (cube != selectedGridCube && cube.HasBuilding())
+                cube.SetSelected(true);
         }
         prevSelectedCubes.Clear();
         UpdateDeleteButtonVisual(); // 버튼 색상도 원래대로
@@ -127,7 +130,7 @@ public class BuildingDestroyer : MonoBehaviour
         //     cube.SetHighlight(GridCube.HoverColor);
         // }
         bool hasBuilding = cube.HasBuilding();
-        Debug.Log("OnGridCubePointerEnter: " + cube.name + ", isDeleteMode: " + isDeleteMode + ", hasBuilding: " + hasBuilding);
+        //Debug.Log("OnGridCubePointerEnter: " + cube.name + ", isDeleteMode: " + isDeleteMode + ", hasBuilding: " + hasBuilding);
         cube.SetHovered(true, isDeleteMode, hasBuilding);
     }
 
@@ -140,7 +143,7 @@ public class BuildingDestroyer : MonoBehaviour
         //     cube.SetHighlight(GridCube.HighlightColor);
         // }
         bool hasBuilding = cube.HasBuilding();
-        Debug.Log("OnGridCubePointerExit: " + cube.name + ", isDeleteMode: " + isDeleteMode + ", hasBuilding: " + hasBuilding);
+        //Debug.Log("OnGridCubePointerExit: " + cube.name + ", isDeleteMode: " + isDeleteMode + ", hasBuilding: " + hasBuilding);
         cube.SetHovered(false, isDeleteMode, hasBuilding);
     }
 
@@ -176,9 +179,10 @@ public class BuildingDestroyer : MonoBehaviour
         {
             selectedGridCube.RemoveAllBuildings();
             selectedGridCube.SetHighlight(GridCube.DefaultColor);
-            selectedGridCube = null;
+            Debug.Log("Building destroyed on " + selectedGridCube.name);
         }
         DeactivateDeleteMode();
+        selectedGridCube = null; // DeactivateDeleteMode 이후에 null로 만듭니다.
     }
 
     // 팝업에서 아니오 선택

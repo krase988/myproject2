@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic; 
 
 public class GridCube : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class GridCube : MonoBehaviour
 
     private float buildingHeight = 0.2f;    // Building 큐브 높이
     private float baseY = 0.1f;              // GridCube 높이 기준 Y값
+    private List<GameObject> buildingCubes = new List<GameObject>();
 
     public static readonly Color DefaultColor = Color.white;
     public static readonly Color BuildingColor = Color.red;
@@ -167,22 +169,32 @@ public class GridCube : MonoBehaviour
 
     void BuildOne()
     {
-        int count = transform.childCount; // 현재 건물 층 수
-        //Debug.Log("BuildOne: " + count);
+        // int count = transform.childCount; // 현재 건물 층 수
+        // //Debug.Log("BuildOne: " + count);
+        // Vector3 pos = new Vector3(0f, baseY + buildingHeight * count, 0f);
+        // GameObject newBuilding = Instantiate(buildingPrefab, transform);
+        // newBuilding.transform.localPosition = pos;
+        // //Debug.Log("BuildOne: " + pos);
+        // newBuilding.transform.localScale = new Vector3(0.9f, 0.2f, 0.9f);
+        // Renderer rend = newBuilding.GetComponent<Renderer>();
+        // if(rend != null)
+        //     rend.material.color = Color.red;
+        int count = buildingCubes.Count; // 또는 transform.childCount
         Vector3 pos = new Vector3(0f, baseY + buildingHeight * count, 0f);
         GameObject newBuilding = Instantiate(buildingPrefab, transform);
         newBuilding.transform.localPosition = pos;
-        //Debug.Log("BuildOne: " + pos);
         newBuilding.transform.localScale = new Vector3(0.9f, 0.2f, 0.9f);
         Renderer rend = newBuilding.GetComponent<Renderer>();
         if(rend != null)
             rend.material.color = Color.red;
+        buildingCubes.Add(newBuilding); // 리스트에 추가!
     }
 
     public bool HasBuilding()
     {
         // buildingPrefab으로 생성된 큐브들이 자식 오브젝트로 존재하면 true 반환 (0층 이상이면)
-        return transform.childCount > 0;
+        //return transform.childCount > 0;
+        return buildingCubes.Count > 0;
     }
 
 
@@ -208,10 +220,16 @@ public class GridCube : MonoBehaviour
 
     public void RemoveAllBuildings()
     {
-        for (int i = transform.childCount - 1; i >= 0; i--)
+        // for (int i = transform.childCount - 1; i >= 0; i--)
+        // {
+        //     Destroy(transform.GetChild(i).gameObject);
+        // }
+        // buildingCube 오브젝트 모두 삭제
+        foreach (var cube in buildingCubes)
         {
-            Destroy(transform.GetChild(i).gameObject);
+            Destroy(cube);
         }
+        buildingCubes.Clear(); // 리스트도 반드시 비워야 함
     }
 
 }
