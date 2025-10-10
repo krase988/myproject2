@@ -24,11 +24,17 @@ public class GridCube : MonoBehaviour
     void Awake()
     {
         rend = GetComponent<Renderer>();
-        //SetColor(DefaultColor);
-        UpdateVisual(false);
+        //UpdateVisual(false, false);
+        if (rend == null)
+        {
+            rend = GetComponentInChildren<Renderer>();
+            if (rend == null)
+                Debug.LogError("Renderer not found on GridCube!", this);
+        }
+    SetColor(DefaultColor);
     }
 
-    public void SetSelected(bool selected)
+    public void SetSelected(bool selected, bool isDeleteMode = false, bool hasBuilding = false)
     {
         isSelected = selected;
         Debug.Log($"SetSelected called on {gameObject.name}");
@@ -44,7 +50,7 @@ public class GridCube : MonoBehaviour
             StopBuildingCell();
             //SetColor(DefaultColor);
         }
-        UpdateVisual(false);
+        UpdateVisual(isDeleteMode, hasBuilding);
     }
 
     public bool IsSelected()
@@ -57,22 +63,17 @@ public class GridCube : MonoBehaviour
         isDeleteMode = isDM;
     }
 
-    public void SetHovered(bool hovered)
+    public void SetHovered(bool hovered, bool isDeleteMode, bool hasBuilding)
     {
         isHovered = hovered;
-        UpdateVisual(isDeleteMode);
+        UpdateVisual(isDeleteMode, hasBuilding);
     }
 
-    private void UpdateVisual(bool isDeleteMode)
+    private void UpdateVisual(bool isDeleteMode, bool hasBuilding)
     {
-        // if (isSelected)
-        //     SetColor(BuildingColor);
-        // else if (isHovered)
-        //     SetColor(SelectColor);
-        // else
-        //     SetColor(DefaultColor);
         if (isSelected)
         {
+            Debug.Log("Selected, DeleteMode: " + isDeleteMode + ", hasBuilding: " + hasBuilding, this);
             if(isDeleteMode)
                 SetColor(HighlightColor);
             else
@@ -80,21 +81,43 @@ public class GridCube : MonoBehaviour
         }
         else if (isHovered)
         {
-            if (isDeleteMode)
-                SetColor(HoverColorDeleteMode);
+            Debug.Log("Hovered, DeleteMode: " + isDeleteMode + ", hasBuilding: " + hasBuilding, this);
+            // if (isDeleteMode)
+            //     SetColor(HoverColorDeleteMode);
+            // else
+            //     SetColor(HoverColorDefault);
+            if (isDeleteMode && hasBuilding)
+                SetColor(HoverColorDeleteMode); // 진노랑
+            else if (isDeleteMode && !hasBuilding)
+                SetColor(DefaultColor); // 삭제모드지만 빌딩 없음 → 흰색
             else
-                SetColor(HoverColorDefault);
+                SetColor(HoverColorDefault); // 일반 hover
         }
         else
         {
-            SetColor(DefaultColor);
+            Debug.Log("Normal, DeleteMode: " + isDeleteMode + ", hasBuilding: " + hasBuilding, this);
+            // SetColor(DefaultColor);
+            if (isDeleteMode && hasBuilding)
+                SetColor(HighlightColor); // 연노랑
+            else
+                SetColor(DefaultColor);
         }
     }
     
     void SetColor(Color color)
     {
-        if (rend == null) return;
-        rend.material.color = color;
+        //Debug.Log("SetColor called, rend: " + rend);
+        // if (rend == null) return;
+        // rend.material.color = color;
+        // Debug.Log("SetColor: " + color, this);
+        if (rend != null)
+        {
+            rend.material.color = color;
+        }
+        else
+        {
+            Debug.LogError("Renderer is null in SetColor!", this);
+        }
         // 자식 building 큐브들도 색상 변경
         foreach (Transform child in transform)
         {
@@ -174,6 +197,7 @@ public class GridCube : MonoBehaviour
         //     if (childRenderer != null)
         //         childRenderer.material.color = color;
         // }
+        // Debug.Log("SetHighlight called" + color, this);
         SetColor(color);
     }
 

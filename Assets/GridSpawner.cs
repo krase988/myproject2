@@ -31,6 +31,7 @@ public class GridSpawner : MonoBehaviour
 
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.EventSystems;
 
 public class GridSpawner : MonoBehaviour
 {
@@ -38,7 +39,7 @@ public class GridSpawner : MonoBehaviour
     public int rows = 7;
     public int columns = 7;
     public float spacing = 1.1f;  // grid 블록 사이 간격
-
+    public BuildingDestroyer buildingDestroyer; // 인스펙터에서 연결
     private List<GridCube> gridCubeList = new List<GridCube>();
 
     void Start()
@@ -58,6 +59,35 @@ public class GridSpawner : MonoBehaviour
                 if (gridCube != null)
                 {
                     gridCubeList.Add(gridCube);
+
+                    // EventTrigger 추가 및 이벤트 연결
+                    EventTrigger trigger = gridObj.GetComponent<EventTrigger>();
+                    if (trigger == null)
+                        trigger = gridObj.AddComponent<EventTrigger>();
+
+                    // PointerEnter
+                    var entryEnter = new EventTrigger.Entry();
+                    entryEnter.eventID = EventTriggerType.PointerEnter;
+                    entryEnter.callback.AddListener((eventData) => {
+                        buildingDestroyer.OnGridCubePointerEnter(gridCube);
+                    });
+                    trigger.triggers.Add(entryEnter);
+
+                    // PointerExit
+                    var entryExit = new EventTrigger.Entry();
+                    entryExit.eventID = EventTriggerType.PointerExit;
+                    entryExit.callback.AddListener((eventData) => {
+                        buildingDestroyer.OnGridCubePointerExit(gridCube);
+                    });
+                    trigger.triggers.Add(entryExit);
+
+                    // PointerClick (선택/삭제 등 필요시)
+                    var entryClick = new EventTrigger.Entry();
+                    entryClick.eventID = EventTriggerType.PointerClick;
+                    entryClick.callback.AddListener((eventData) => {
+                        buildingDestroyer.OnGridCubeClick(gridCube);
+                    });
+                    trigger.triggers.Add(entryClick);
                 }
                 else
                 {

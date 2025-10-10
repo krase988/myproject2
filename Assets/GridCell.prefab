@@ -13,8 +13,6 @@ GameObject:
   - component: {fileID: 7316925337188788790}
   - component: {fileID: 3502032297060912425}
   - component: {fileID: 4578027600279678206}
-  - component: {fileID: 6747252135893196428}
-  - component: {fileID: 6540782989452820754}
   - component: {fileID: 147008160315372733}
   m_Layer: 0
   m_Name: GridCell
@@ -117,31 +115,6 @@ MonoBehaviour:
     _json: '{"declarations":{"Kind":"Object","collection":{"$content":[{"name":"type","value":{"$content":1,"$type":"System.Int32"},"typeHandle":{"Identification":"System.Int32,
       mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089","$version":"A"},"$version":"A"}],"$version":"A"},"$version":"A"}}'
     _objectReferences: []
---- !u!114 &6747252135893196428
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3526519990569633512}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c1272ca6669aa43cda8f78b70fc43fbe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &6540782989452820754
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3526519990569633512}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d7cb9ea9d08a42b68608778ef612cb5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  buildingPrefab: {fileID: 5290147209928616699, guid: cdd08038fc19a496db3bb82a96d682a1, type: 3}
 --- !u!114 &147008160315372733
 MonoBehaviour:
   m_ObjectHideFlags: 0

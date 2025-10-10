@@ -202,14 +202,14 @@ public class GridCellToggle : MonoBehaviour
     {
         //isHovered = true;
         //UpdateVisual();
-        gridCube.SetHovered(true);
+        gridCube.SetHovered(true, false, gridCube.HasBuilding());
     }
 
     void OnMouseExit()
     {
         //isHovered = false;
         //UpdateVisual();
-        gridCube.SetHovered(false);
+        gridCube.SetHovered(false, false, gridCube.HasBuilding());
     }
 
     void OnMouseDown()
