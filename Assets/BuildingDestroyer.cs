@@ -88,6 +88,7 @@ public class BuildingDestroyer : MonoBehaviour
     // 삭제 모드 비활성화 : 하이라이트 복원, 빌딩 성장 재개
     private void DeactivateDeleteMode()
     {
+        isDeleteMode = false; // 삭제모드 해제
         messageText.text = "";
         confirmPopup.SetActive(false);
         selectedGridCube = null;
@@ -105,6 +106,7 @@ public class BuildingDestroyer : MonoBehaviour
             cube.SetSelected(true);
         }
         prevSelectedCubes.Clear();
+        UpdateDeleteButtonVisual(); // 버튼 색상도 원래대로
     }
 
     // X 버튼 눌림 여부에 따른 색상 변경
@@ -153,13 +155,17 @@ public class BuildingDestroyer : MonoBehaviour
         }
         else if (!isDeleteMode)
         {
-            // 모든 GridCube 선택 해제
-            foreach (var c in gridCubes)
-            {
-                c.SetSelected(false, isDeleteMode, c.HasBuilding());
-            }
-            // 클릭한 GridCube만 선택 및 성장 시작
-            cube.SetSelected(true, isDeleteMode, cube.HasBuilding());
+            // // 모든 GridCube 선택 해제
+            // foreach (var c in gridCubes)
+            // {
+            //     c.SetSelected(false, isDeleteMode, c.HasBuilding());
+            // }
+            // // 클릭한 GridCube만 선택 및 성장 시작
+            // cube.SetSelected(true, isDeleteMode, cube.HasBuilding());
+            // 기존 전체 선택 해제 코드를 제거
+            // 클릭한 GridCube만 토글
+            bool wasSelected = cube.IsSelected();
+            cube.SetSelected(!wasSelected, isDeleteMode, cube.HasBuilding());
         }
     }
 

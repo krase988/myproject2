@@ -37,7 +37,7 @@ public class GridCube : MonoBehaviour
     public void SetSelected(bool selected, bool isDeleteMode = false, bool hasBuilding = false)
     {
         isSelected = selected;
-        Debug.Log($"SetSelected called on {gameObject.name}");
+        //Debug.Log($"SetSelected called on {gameObject.name}");
 
         if (isSelected)
         {
@@ -129,7 +129,7 @@ public class GridCube : MonoBehaviour
 
     public void StartBuildingCell()
     {
-        Debug.Log($"StartBuildingCell called on {gameObject.name}");
+        //Debug.Log($"StartBuildingCell called on {gameObject.name}");
         StartBuilding();
     }
 
@@ -141,7 +141,7 @@ public class GridCube : MonoBehaviour
 
     public void StopBuildingCell()
     {
-        Debug.Log($"StopBuildingCell called on {gameObject.name}");
+        //Debug.Log($"StopBuildingCell called on {gameObject.name}");
         StopBuilding();
     }
     
@@ -149,7 +149,7 @@ public class GridCube : MonoBehaviour
     {
         if (buildCoroutine != null)
         {
-            Debug.Log($"Stopping coroutine on {gameObject.name}");
+            //Debug.Log($"Stopping coroutine on {gameObject.name}");
             StopCoroutine(buildCoroutine);
             buildCoroutine = null;
         }
