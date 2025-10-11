@@ -16,7 +16,7 @@ public class BuildingDestroyer : MonoBehaviour
     private bool isDeleteMode = false;
     private GridCube selectedGridCube = null;
     private List<GridCube> prevSelectedCubes = new List<GridCube>(); // 삭제모드 진입 전 선택 상태 저장
-
+    public CountGrowingBuilding countGrowingBuilding; // 인스펙터에서 연결
 
     void Start()
     {
@@ -158,17 +158,23 @@ public class BuildingDestroyer : MonoBehaviour
         }
         else if (!isDeleteMode)
         {
-            // // 모든 GridCube 선택 해제
-            // foreach (var c in gridCubes)
-            // {
-            //     c.SetSelected(false, isDeleteMode, c.HasBuilding());
-            // }
-            // // 클릭한 GridCube만 선택 및 성장 시작
-            // cube.SetSelected(true, isDeleteMode, cube.HasBuilding());
             // 기존 전체 선택 해제 코드를 제거
             // 클릭한 GridCube만 토글
-            bool wasSelected = cube.IsSelected();
-            cube.SetSelected(!wasSelected, isDeleteMode, cube.HasBuilding());
+            // bool wasSelected = cube.IsSelected();
+            // cube.SetSelected(!wasSelected, isDeleteMode, cube.HasBuilding());
+            if (!cube.IsSelected())
+            {
+                if (countGrowingBuilding.CanSelect())
+                {
+                    cube.SetSelected(true, isDeleteMode, cube.HasBuilding());
+                    countGrowingBuilding.OnSelect();
+                }
+            }
+            else
+            {
+                cube.SetSelected(false, isDeleteMode, cube.HasBuilding());
+                countGrowingBuilding.OnDeselect();
+            }
         }
     }
 
@@ -177,6 +183,15 @@ public class BuildingDestroyer : MonoBehaviour
     {
         if (selectedGridCube != null)
         {
+            // log for selectedGridCube.isSelected()
+            //Debug.Log("Confirm destroy on " + selectedGridCube.name + ", isSelected: " + selectedGridCube.IsSelected() + ", hasBuilding: " + selectedGridCube.HasBuilding());
+            // 만약 삭제된 GridCube가 선택(빨간색)이었다면 카운트 복원
+            if (prevSelectedCubes.Contains(selectedGridCube))
+            {
+                countGrowingBuilding.OnDeselect();
+                prevSelectedCubes.Remove(selectedGridCube); // ★ 이 줄 추가!
+                selectedGridCube.SetSelected(false, isDeleteMode, selectedGridCube.HasBuilding());
+            }
             selectedGridCube.RemoveAllBuildings();
             selectedGridCube.SetHighlight(GridCube.DefaultColor);
             Debug.Log("Building destroyed on " + selectedGridCube.name);

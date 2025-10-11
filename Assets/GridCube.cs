@@ -75,7 +75,7 @@ public class GridCube : MonoBehaviour
     {
         if (isSelected)
         {
-            Debug.Log("Selected, DeleteMode: " + isDeleteMode + ", hasBuilding: " + hasBuilding, this);
+            //Debug.Log("Selected, DeleteMode: " + isDeleteMode + ", hasBuilding: " + hasBuilding, this);
             if(isDeleteMode)
                 SetColor(HighlightColor);
             else
@@ -83,7 +83,7 @@ public class GridCube : MonoBehaviour
         }
         else if (isHovered)
         {
-            Debug.Log("Hovered, DeleteMode: " + isDeleteMode + ", hasBuilding: " + hasBuilding, this);
+            //Debug.Log("Hovered, DeleteMode: " + isDeleteMode + ", hasBuilding: " + hasBuilding, this);
             // if (isDeleteMode)
             //     SetColor(HoverColorDeleteMode);
             // else
@@ -97,7 +97,7 @@ public class GridCube : MonoBehaviour
         }
         else
         {
-            Debug.Log("Normal, DeleteMode: " + isDeleteMode + ", hasBuilding: " + hasBuilding, this);
+            //Debug.Log("Normal, DeleteMode: " + isDeleteMode + ", hasBuilding: " + hasBuilding, this);
             // SetColor(DefaultColor);
             if (isDeleteMode && hasBuilding)
                 SetColor(HighlightColor); // 연노랑
