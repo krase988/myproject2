@@ -18,7 +18,7 @@ public class CountMoney : MonoBehaviour
         if (backgroundImage != null)
         {
             backgroundImage.color = new Color(1f, 0.82f, 0f, 1f); // 진노랑색
-            backgroundImage.GetComponent<RectTransform>().sizeDelta = new Vector2(120, 40);
+            //backgroundImage.GetComponent<RectTransform>().sizeDelta = new Vector2(120, 40);
         }
         if (moneyText != null)
         {

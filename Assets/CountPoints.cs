@@ -18,7 +18,7 @@ public class CountPoints : MonoBehaviour
         if (backgroundImage != null)
         {
             backgroundImage.color = new Color(0.2f, 0.8f, 0.2f, 1f); // 초록색
-            backgroundImage.GetComponent<RectTransform>().sizeDelta = new Vector2(120, 40);
+            //backgroundImage.GetComponent<RectTransform>().sizeDelta = new Vector2(120, 40);
         }
         if (pointsText != null)
         {

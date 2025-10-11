@@ -21,7 +21,7 @@ public class CountGrowingBuilding : MonoBehaviour
         if (backgroundImage != null)
         {
             backgroundImage.color = new Color(0.5f, 0.2f, 0.8f, 1f); // 보라색
-            backgroundImage.GetComponent<RectTransform>().sizeDelta = new Vector2(100, 40);
+            //backgroundImage.GetComponent<RectTransform>().sizeDelta = new Vector2(100, 40);
             backgroundImage.GetComponent<Image>().raycastTarget = false;
             backgroundImage.GetComponent<Image>().maskable = false;
             backgroundImage.GetComponent<Image>().type = Image.Type.Sliced;
