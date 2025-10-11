@@ -19,7 +19,8 @@ public class GridCube : MonoBehaviour
     private List<GameObject> buildingCubes = new List<GameObject>();
     public CountPoints countPoints;
     public CountMoney countMoney;
-
+    public int cubeIndex; // GridSpawner에서 할당
+    
     public static readonly Color DefaultColor = Color.white;
     public static readonly Color BuildingColor = Color.red;
     public static readonly Color HighlightColor = new Color(1f, 0.92f, 0.4f); // 연노란색
@@ -256,10 +257,14 @@ public class GridCube : MonoBehaviour
 
         if (countPoints != null && removeCount > 0)
             countPoints.RemovePoint(removeCount); // 삭제된 개수만큼 점수 차감
-        
+
         if (countMoney != null && removeCount > 0)
             countMoney.AddMoney(removeCount); // 삭제된 개수만큼 재화 증가
 
+    }
+    public int GetBuildingCount()
+    {
+        return buildingCubes.Count;
     }
 
 }

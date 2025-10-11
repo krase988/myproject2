@@ -17,6 +17,7 @@ public class BuildingDestroyer : MonoBehaviour
     private GridCube selectedGridCube = null;
     private List<GridCube> prevSelectedCubes = new List<GridCube>(); // 삭제모드 진입 전 선택 상태 저장
     public CountGrowingBuilding countGrowingBuilding; // 인스펙터에서 연결
+    public MiniPopup miniPopup; // 인스펙터에서 연결
 
     void Start()
     {
@@ -132,6 +133,10 @@ public class BuildingDestroyer : MonoBehaviour
         bool hasBuilding = cube.HasBuilding();
         //Debug.Log("OnGridCubePointerEnter: " + cube.name + ", isDeleteMode: " + isDeleteMode + ", hasBuilding: " + hasBuilding);
         cube.SetHovered(true, isDeleteMode, hasBuilding);
+
+        // 팝업 표시
+        string info = $"No: {cube.cubeIndex}\nHeight: {cube.GetBuildingCount()}";
+        miniPopup.Show(cube);
     }
 
     // 마우스 포인터가 GridCube에서 나갔을 때
@@ -145,6 +150,8 @@ public class BuildingDestroyer : MonoBehaviour
         bool hasBuilding = cube.HasBuilding();
         //Debug.Log("OnGridCubePointerExit: " + cube.name + ", isDeleteMode: " + isDeleteMode + ", hasBuilding: " + hasBuilding);
         cube.SetHovered(false, isDeleteMode, hasBuilding);
+        // 팝업 숨김
+        miniPopup.Hide();
     }
 
     // GridCube 클릭 시 호출

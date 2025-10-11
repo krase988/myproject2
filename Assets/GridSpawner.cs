@@ -43,6 +43,7 @@ public class GridSpawner : MonoBehaviour
     private List<GridCube> gridCubeList = new List<GridCube>();
     public CountPoints countPoints;
     public CountMoney countMoney;
+    public int cubeIndex = 0; // 각 GridCube에 고유 번호 부여용
 
     void Start()
     {
@@ -51,6 +52,7 @@ public class GridSpawner : MonoBehaviour
 
     void SpawnGrid()
     {
+        int index = 0;
         for (int x = 0; x < columns; x++)
         {
             for (int z = 0; z < rows; z++)
@@ -60,6 +62,8 @@ public class GridSpawner : MonoBehaviour
                 GridCube gridCube = gridObj.GetComponent<GridCube>();
                 if (gridCube != null)
                 {
+                    gridCube.cubeIndex = index; // 고유 번호 할당
+                    index++;
                     gridCubeList.Add(gridCube);
 
                     // EventTrigger 추가 및 이벤트 연결
