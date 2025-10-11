@@ -41,6 +41,7 @@ public class GridSpawner : MonoBehaviour
     public float spacing = 1.1f;  // grid 블록 사이 간격
     public BuildingDestroyer buildingDestroyer; // 인스펙터에서 연결
     private List<GridCube> gridCubeList = new List<GridCube>();
+    public CountPoints countPoints;
 
     void Start()
     {
@@ -88,6 +89,9 @@ public class GridSpawner : MonoBehaviour
                         buildingDestroyer.OnGridCubeClick(gridCube);
                     });
                     trigger.triggers.Add(entryClick);
+
+                    // CountPoints 연결
+                    gridCube.countPoints = countPoints;
                 }
                 else
                 {

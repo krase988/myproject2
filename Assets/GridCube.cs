@@ -16,6 +16,7 @@ public class GridCube : MonoBehaviour
     private float buildingHeight = 0.2f;    // Building 큐브 높이
     private float baseY = 0.1f;              // GridCube 높이 기준 Y값
     private List<GameObject> buildingCubes = new List<GameObject>();
+    public CountPoints countPoints;
 
     public static readonly Color DefaultColor = Color.white;
     public static readonly Color BuildingColor = Color.red;
@@ -188,6 +189,7 @@ public class GridCube : MonoBehaviour
         if(rend != null)
             rend.material.color = Color.red;
         buildingCubes.Add(newBuilding); // 리스트에 추가!
+        countPoints.AddPoint();
     }
 
     public bool HasBuilding()
@@ -224,12 +226,26 @@ public class GridCube : MonoBehaviour
         // {
         //     Destroy(transform.GetChild(i).gameObject);
         // }
+
         // buildingCube 오브젝트 모두 삭제
+        // foreach (var cube in buildingCubes)
+        // {
+        //     Destroy(cube);
+        // }
+        // buildingCubes.Clear(); // 리스트도 반드시 비워야 함
+        // countPoints.RemovePoint();
+
+        int removeCount = buildingCubes.Count; // 삭제될 개수 저장
+
         foreach (var cube in buildingCubes)
         {
             Destroy(cube);
         }
-        buildingCubes.Clear(); // 리스트도 반드시 비워야 함
+        buildingCubes.Clear();
+
+        if (countPoints != null && removeCount > 0)
+            countPoints.RemovePoint(removeCount); // 삭제된 개수만큼 점수 차감
+
     }
 
 }
