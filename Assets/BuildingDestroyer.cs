@@ -18,6 +18,7 @@ public class BuildingDestroyer : MonoBehaviour
     private List<GridCube> prevSelectedCubes = new List<GridCube>(); // 삭제모드 진입 전 선택 상태 저장
     public CountGrowingBuilding countGrowingBuilding; // 인스펙터에서 연결
     public MiniPopup miniPopup; // 인스펙터에서 연결
+    public Button useMoneyButton; // 인스펙터에서 연결
 
     void Start()
     {
@@ -35,6 +36,7 @@ public class BuildingDestroyer : MonoBehaviour
         deleteButton.onClick.AddListener(ToggleDeleteMode);
         confirmPopup.SetActive(false);
         messageText.text = "";
+        useMoneyButton.onClick.AddListener(UseMoneyButtonClicked);
 
         //Debug.Log("Grid cube count at Start: " + (gridCubes != null ? gridCubes.Count.ToString() : "null"));
     }
@@ -213,5 +215,12 @@ public class BuildingDestroyer : MonoBehaviour
     {
         selectedGridCube = null;
         DeactivateDeleteMode();
+    }
+
+    public void UseMoneyButtonClicked()
+    {
+        // 여기에 재화 사용 로직 구현
+        Debug.Log("Clicked Use Money Button");
+        // 예시: 특정 금액 차감, 건물 생성 등
     }
 }
