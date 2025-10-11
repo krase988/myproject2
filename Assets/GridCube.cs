@@ -12,6 +12,7 @@ public class GridCube : MonoBehaviour
     private Renderer rend;
     //private bool isSelected = false;         // 빨간색 토글 상태
     private Coroutine buildCoroutine;
+    private Color currentCubeColor = DefaultColor; // 현재 색상 저장용
 
     private float buildingHeight = 0.2f;    // Building 큐브 높이
     private float baseY = 0.1f;              // GridCube 높이 기준 Y값
@@ -75,14 +76,21 @@ public class GridCube : MonoBehaviour
 
     private void UpdateVisual(bool isDeleteMode, bool hasBuilding)
     {
-        if (isSelected)
+        // 1. 선택+호버(빨간+마우스)일 때 초록색
+        if (isSelected && isHovered)
+        {
+            SetColor(HoverColorDefault); // 초록색
+        }
+        // 2. 선택만 되어 있을 때
+        else if (isSelected)
         {
             //Debug.Log("Selected, DeleteMode: " + isDeleteMode + ", hasBuilding: " + hasBuilding, this);
-            if(isDeleteMode)
+            if (isDeleteMode)
                 SetColor(HighlightColor);
             else
                 SetColor(BuildingColor);
         }
+        // 3. 호버만 되어 있을 때
         else if (isHovered)
         {
             //Debug.Log("Hovered, DeleteMode: " + isDeleteMode + ", hasBuilding: " + hasBuilding, this);
@@ -97,6 +105,7 @@ public class GridCube : MonoBehaviour
             else
                 SetColor(HoverColorDefault); // 일반 hover
         }
+        // 4. 아무것도 아닐 때
         else
         {
             //Debug.Log("Normal, DeleteMode: " + isDeleteMode + ", hasBuilding: " + hasBuilding, this);
@@ -114,6 +123,7 @@ public class GridCube : MonoBehaviour
         // if (rend == null) return;
         // rend.material.color = color;
         // Debug.Log("SetColor: " + color, this);
+        currentCubeColor = color; // 현재 색상 저장
         if (rend != null)
         {
             rend.material.color = color;
@@ -188,7 +198,7 @@ public class GridCube : MonoBehaviour
         newBuilding.transform.localScale = new Vector3(0.9f, 0.2f, 0.9f);
         Renderer rend = newBuilding.GetComponent<Renderer>();
         if(rend != null)
-            rend.material.color = Color.red;
+            rend.material.color = currentCubeColor; // 현재 GridCube 색상과 맞춤!
         buildingCubes.Add(newBuilding); // 리스트에 추가!
         countPoints.AddPoint();
     }

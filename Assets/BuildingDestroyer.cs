@@ -153,6 +153,7 @@ public class BuildingDestroyer : MonoBehaviour
         if (isDeleteMode && cube.HasBuilding())
         {
             selectedGridCube = cube;
+            messageText.text = "";
             popupText.text = "Destroy Building?";
             confirmPopup.SetActive(true);
         }
