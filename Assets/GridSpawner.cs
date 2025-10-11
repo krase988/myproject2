@@ -42,6 +42,7 @@ public class GridSpawner : MonoBehaviour
     public BuildingDestroyer buildingDestroyer; // 인스펙터에서 연결
     private List<GridCube> gridCubeList = new List<GridCube>();
     public CountPoints countPoints;
+    public CountMoney countMoney;
 
     void Start()
     {
@@ -92,6 +93,8 @@ public class GridSpawner : MonoBehaviour
 
                     // CountPoints 연결
                     gridCube.countPoints = countPoints;
+                    // CountMoney 연결
+                    gridCube.countMoney = countMoney; 
                 }
                 else
                 {

@@ -17,6 +17,7 @@ public class GridCube : MonoBehaviour
     private float baseY = 0.1f;              // GridCube 높이 기준 Y값
     private List<GameObject> buildingCubes = new List<GameObject>();
     public CountPoints countPoints;
+    public CountMoney countMoney;
 
     public static readonly Color DefaultColor = Color.white;
     public static readonly Color BuildingColor = Color.red;
@@ -245,6 +246,9 @@ public class GridCube : MonoBehaviour
 
         if (countPoints != null && removeCount > 0)
             countPoints.RemovePoint(removeCount); // 삭제된 개수만큼 점수 차감
+        
+        if (countMoney != null && removeCount > 0)
+            countMoney.AddMoney(removeCount); // 삭제된 개수만큼 재화 증가
 
     }
 
