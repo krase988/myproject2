@@ -36,7 +36,7 @@ public class BuildingDestroyer : MonoBehaviour
         deleteButton.onClick.AddListener(ToggleDeleteMode);
         confirmPopup.SetActive(false);
         //messageText.text = "";
-        MessageManager.Instance.ShowMessage("");
+        //MessageManager.Instance.ShowMessage("");
         useMoneyButton.onClick.AddListener(UseMoneyButtonClicked);
 
         //Debug.Log("Grid cube count at Start: " + (gridCubes != null ? gridCubes.Count.ToString() : "null"));
