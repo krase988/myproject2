@@ -8,7 +8,7 @@ public class BuildingDestroyer : MonoBehaviour
     public Button deleteButton;
     public GameObject confirmPopup;
     public TextMeshProUGUI popupText;
-    public TextMeshProUGUI messageText;
+    //public TextMeshProUGUI messageText;
     public GridSpawner gridSpawner;  // 인스펙터에서 연결
 
     public List<GridCube> gridCubes;
@@ -35,7 +35,8 @@ public class BuildingDestroyer : MonoBehaviour
         Debug.Log("GridCubes count: " + gridCubes.Count);
         deleteButton.onClick.AddListener(ToggleDeleteMode);
         confirmPopup.SetActive(false);
-        messageText.text = "";
+        //messageText.text = "";
+        MessageManager.Instance.ShowMessage("");
         useMoneyButton.onClick.AddListener(UseMoneyButtonClicked);
 
         //Debug.Log("Grid cube count at Start: " + (gridCubes != null ? gridCubes.Count.ToString() : "null"));
@@ -63,7 +64,7 @@ public class BuildingDestroyer : MonoBehaviour
     // 삭제 모드 활성화 : 연노랑 하이라이트, 빌딩 성장 중지
     public void ActivateDeleteMode()
     {
-        messageText.text = "Select Cell with Building.";
+        MessageManager.Instance.ShowMessage("Select Cell with Building.");
         confirmPopup.SetActive(false);
         selectedGridCube = null;
         //Debug.Log($"GridCubes count: {gridCubes.Count}");
@@ -92,7 +93,7 @@ public class BuildingDestroyer : MonoBehaviour
     private void DeactivateDeleteMode()
     {
         isDeleteMode = false; // 삭제모드 해제
-        messageText.text = "";
+        MessageManager.Instance.ShowMessage("");
         confirmPopup.SetActive(false);
         selectedGridCube = null;
 
@@ -162,7 +163,7 @@ public class BuildingDestroyer : MonoBehaviour
         if (isDeleteMode && cube.HasBuilding())
         {
             selectedGridCube = cube;
-            messageText.text = "";
+            MessageManager.Instance.ShowMessage("");
             popupText.text = "Destroy Building?";
             confirmPopup.SetActive(true);
         }
