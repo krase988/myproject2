@@ -43,7 +43,7 @@ public class MainToolButtonGroup : MonoBehaviour, IPointerEnterHandler, IPointer
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        Debug.Log("[MainToolButtonGroup] OnPointerEnter");
+        //Debug.Log("[MainToolButtonGroup] OnPointerEnter");
         isPointerOver = true;
         toolButtonsPanel.SetActive(true);
 
@@ -57,7 +57,7 @@ public class MainToolButtonGroup : MonoBehaviour, IPointerEnterHandler, IPointer
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        Debug.Log("[MainToolButtonGroup] OnPointerExit");
+        //Debug.Log("[MainToolButtonGroup] OnPointerExit");
         isPointerOver = false;
         // toolButtonsPanel.SetActive(false);
         if (hideCoroutine == null)
@@ -88,13 +88,13 @@ public class MainToolButtonGroup : MonoBehaviour, IPointerEnterHandler, IPointer
     //     hideCoroutine = null;
     // }
     {
-        Debug.Log($"[MainToolButtonGroup] HidePanelWithDelay 시작, delay={delay}");
+        //Debug.Log($"[MainToolButtonGroup] HidePanelWithDelay 시작, delay={delay}");
         yield return new WaitForSeconds(delay);
-        Debug.Log($"[MainToolButtonGroup] HidePanelWithDelay 대기 후, isPointerOver={isPointerOver}");
+        //Debug.Log($"[MainToolButtonGroup] HidePanelWithDelay 대기 후, isPointerOver={isPointerOver}");
         if (!isPointerOver)
         {
             toolButtonsPanel.SetActive(false);
-            Debug.Log("[MainToolButtonGroup] toolButtonsPanel 비활성화!");
+            //Debug.Log("[MainToolButtonGroup] toolButtonsPanel 비활성화!");
         }
         hideCoroutine = null;
     }

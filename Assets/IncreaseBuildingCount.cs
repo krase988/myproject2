@@ -38,10 +38,13 @@ public class IncreaseBuildingCount : MonoBehaviour
 
         // 건설 제한 증가
         countGrowingBuilding.maxCount += 1;
+        countGrowingBuilding.AddCurrentCount(1); // 현재 카운트도 1 증가
 
         useCount++;
         //Debug.Log($"건설 제한이 {countGrowingBuilding.maxCount}로 증가! (남은 사용 가능 횟수: {maxUseCount - useCount})");
         MessageManager.Instance.ShowMessage($"건설 제한이 {countGrowingBuilding.maxCount}로 증가! (남은 사용 가능 횟수: {maxUseCount - useCount})");
+
+        
     }
 
     /// <summary>

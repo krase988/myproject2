@@ -62,4 +62,11 @@ public class CountGrowingBuilding : MonoBehaviour
         if (countText != null)
             countText.text = $"{currentCount}/{maxCount}";
     }
+    public void AddCurrentCount(int amount)
+    {
+        currentCount += amount;
+        if (currentCount > maxCount)
+            currentCount = maxCount;
+        UpdateUI();
+    }
 }
