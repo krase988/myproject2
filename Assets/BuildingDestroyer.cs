@@ -93,7 +93,7 @@ public class BuildingDestroyer : MonoBehaviour
     private void DeactivateDeleteMode()
     {
         isDeleteMode = false; // 삭제모드 해제
-        MessageManager.Instance.ShowMessage("");
+        //MessageManager.Instance.ShowMessage("");
         confirmPopup.SetActive(false);
         selectedGridCube = null;
 
@@ -163,7 +163,7 @@ public class BuildingDestroyer : MonoBehaviour
         if (isDeleteMode && cube.HasBuilding())
         {
             selectedGridCube = cube;
-            MessageManager.Instance.ShowMessage("");
+            //MessageManager.Instance.ShowMessage("");
             popupText.text = "Destroy Building?";
             confirmPopup.SetActive(true);
         }
