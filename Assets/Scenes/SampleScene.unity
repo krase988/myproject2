@@ -1556,8 +1556,8 @@ MonoBehaviour:
 
     Building height'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: c070776d55f3d86469057d6da54ae7a5, type: 2}
+  m_sharedMaterial: {fileID: 6676315130785223126, guid: c070776d55f3d86469057d6da54ae7a5, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1744,8 +1744,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 107.46, y: -25.705}
-  m_SizeDelta: {x: 194.92, y: 0}
+  m_AnchoredPosition: {x: 107.635, y: -25.705}
+  m_SizeDelta: {x: 195.27, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1178466944
 MonoBehaviour:
@@ -1769,8 +1769,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: sample Text
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 3a5d0707f6bcee44db83a13c8b70dacd, type: 2}
-  m_sharedMaterial: {fileID: 6241145469475211143, guid: 3a5d0707f6bcee44db83a13c8b70dacd, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: c070776d55f3d86469057d6da54ae7a5, type: 2}
+  m_sharedMaterial: {fileID: 6676315130785223126, guid: c070776d55f3d86469057d6da54ae7a5, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2879,8 +2879,22 @@ MonoBehaviour:
   countGrowingBuilding: {fileID: 1801014185}
   countMoney: {fileID: 971436744}
   maxUseCount: 5
-  baseCost: 100
+  baseCost: 10
   costIncrement: 200
+--- !u!114 &1572578206
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1572578196}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e081cccbc660604ab5517a0f7d84be6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  miniPopup: {fileID: 530013809}
+  increaseBuildingCount: {fileID: 1572578201}
 --- !u!1 &1574794882
 GameObject:
   m_ObjectHideFlags: 0

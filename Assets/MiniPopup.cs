@@ -16,7 +16,7 @@ public class MiniPopup : MonoBehaviour
 
     void Update()
     {
-        if (popupRect.gameObject.activeSelf && targetCube != null)
+        if (popupRect.gameObject.activeSelf)
         {
             Vector2 mousePos;
             RectTransformUtility.ScreenPointToLocalPointInRectangle(
@@ -26,8 +26,8 @@ public class MiniPopup : MonoBehaviour
                 out mousePos
             );
             popupRect.anchoredPosition = mousePos + new Vector2(80, -40); // 마우스 오른쪽 아래로 약간 이동
-
-            UpdateInfo(); // 매 프레임 정보 갱신
+            if (targetCube != null)
+                UpdateInfo(); // 매 프레임 정보 갱신
         }
     }
     private void UpdateInfo()
@@ -43,6 +43,12 @@ public class MiniPopup : MonoBehaviour
     {
         targetCube = cube;
         UpdateInfo(); // 즉시 한 번 갱신
+        popupRect.gameObject.SetActive(true);
+    }
+    public void Show(string info)
+    {
+        targetCube = null; // 타겟 없음
+        infoText.text = info;
         popupRect.gameObject.SetActive(true);
     }
 
