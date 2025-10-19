@@ -45,9 +45,27 @@ public class GridSpawner : MonoBehaviour
     public CountMoney countMoney;
     public int cubeIndex = 0; // 각 GridCube에 고유 번호 부여용
 
+    // 기존에 그리드 저장 구조가 있다면 그것을 사용하세요.
+    // 없으면 이 두 컬렉션을 사용해 초기화(InitializeGridLookup)로 채웁니다.
+    public Dictionary<Vector2Int, GridCube> gridLookup = new Dictionary<Vector2Int, GridCube>();
+    public List<GridCube> allGridCubes = new List<GridCube>();
+
     void Start()
     {
         SpawnGrid();
+    }
+
+    // 씬에 있는 GridCube(또는 GridSpawner가 생성한 것)를 기반으로 lookup 생성
+    public void InitializeGridLookup()
+    {
+        gridLookup.Clear();
+        allGridCubes.Clear();
+        var cubes = GetComponentsInChildren<GridCube>();
+        foreach (var c in cubes)
+        {
+            allGridCubes.Add(c);
+            gridLookup[c.coord] = c;
+        }
     }
 
     void SpawnGrid()
@@ -118,5 +136,40 @@ public class GridSpawner : MonoBehaviour
 
         // 필요한 경우 리스트 초기화 및 갱신 코드 추가
         return gridCubeList;
+    }
+
+    // center 타일 주위 radius(칸 단위)의 이웃 타일을 반환 (center 제외)
+    public List<GridCube> GetNeighbors(GridCube center, int radius)
+    {
+        var result = new List<GridCube>();
+        if (center == null) return result;
+
+        Vector2Int c = center.coord;
+        for (int dx = -radius; dx <= radius; dx++)
+        {
+            for (int dz = -radius; dz <= radius; dz++)
+            {
+                if (dx == 0 && dz == 0) continue; // 중심 제외 (필요하면 포함하도록 수정)
+                Vector2Int key = new Vector2Int(c.x + dx, c.y + dz);
+                if (gridLookup.TryGetValue(key, out var neighbor))
+                    result.Add(neighbor);
+            }
+        }
+        return result;
+    }
+    
+    // 프로젝트에서 Building 컴포넌트가 존재하면 건물 목록을 반환 (RoadManager에서 사용)
+    public List<Building> GetAllBuildings()
+    {
+        var list = new List<Building>();
+        foreach (var gc in allGridCubes)
+        {
+            if (gc.occupant == GridCube.OccupantType.Building && gc.occupantObj != null)
+            {
+                var b = gc.occupantObj.GetComponent<Building>();
+                if (b != null) list.Add(b);
+            }
+        }
+        return list;
     }
 }

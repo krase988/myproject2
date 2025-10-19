@@ -27,6 +27,11 @@ public class GridCube : MonoBehaviour
     public static readonly Color HoverColorDeleteMode = new Color(1f, 0.82f, 0f); // 진노란색
     public static readonly Color HoverColorDefault = Color.green;
 
+
+    public Vector2Int coord;
+    public enum OccupantType { Empty, Building, Street, Highway }
+    public OccupantType occupant = OccupantType.Empty;
+    public GameObject occupantObj;
     void Awake()
     {
         rend = GetComponent<Renderer>();

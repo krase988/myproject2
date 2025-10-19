@@ -1,0 +1,19 @@
+이제는 다음 스텝으로 나아갈 차례야. 내가 원하는 기능은 GridCube위에 도로를 놓는 것이야. 도로 객체를 일단 RoadCube라고 할게. 나는 일단 이렇게 생각하고 있어. 
+(1) 처음에 만들 것은 RoadCube야. RoadCube로는 StreetCube, HighwayCube를 만들 수 있지(객체 활용). 각각의 특성은 모두 달라. 생김새(추후 3D 모델링을 받거나 제작해서 넣을 생각이야), 기능, 제약사항 모두 달라. 
+(2) StreetCube는 다음과 같은 기능이 있을 예정이야. 
+  - 가격: 재화 100
+  - 모델링 삽입 전까지는 StreetCube의 생김새는 (0.3,0.9,0.1)의 직육면체야. 
+  - StreetCube 주위 반경(8방향 1칸)에 있는 건물(BuildingCube)의 성장 속도가 1.03228배 증가함. 한 건물에 StreetCube의 영향은 최대 6번까지 중첩될 수 있음. 
+  - 하나의 건물에 도로를 8칸씩 둘러 설치하는 것을 막기 위해서 도로가 한 건물에 8칸을 둘러 건축하며 다른 도로와 이어지지 않았을 경우에는 해당 건물에는 성장 속도를 1.01배로 강제로 낮춤.
+(3) HighwayCube는 다음과 같은 기능이 있을 예정이야. 
+  - 가격: 재화 500
+  - 모델링 삽입 전까지는 HighwayCube의 생김새는 (0.9,0.3,0.5) 의 직육면체야. 
+  - HighwayCube는 StreetCube에 영향을 미쳐. HighwayCube가 5칸 이상 연속하여 연결(연결은 동서남북 4방향으로 서로 맞대고 있을 경우에만 해당돼.) 되어 있을 경우에는 HighwayCube에 연결되어 있는 StreetCube는 주변 건물의 성장속도가 2배 늘어. 즉, 해당하는 StreetCube의 주변 건물들은 기존 성장 속도의 2배인 1.06456배의 건물 성장 속도를 가지게 돼. 
+  - HighwayCube에 연결되어 있는 StreetCube는 HighwayCube와 StreetCube와의 연결점으로부터 최대 10칸 길이만큼 영향을 받아. 이는 HighwayCube의 반경이 기준이 아니라 StreetCube의 길이가 기준이 된다는 것을 말해. 
+  - 만약 해당 StreetCube가 여러 방향을 통해 HighwayCube와 연결되어 있다면 짧은 길이를 기준으로 해서 HighwayCube와의 거리를 측정하면 돼.  
+
+위 기능은 RoadCube 클래스를 먼저 생성한 후 해당 RoadCube 클래스의 객체 형태로 StreetCube와 HighwayCube를 생성할 예정이야. 
+
+StreetCube와 HighwayCube는 아무 것도 없는 GridCube위에만 생성할 수 있어. BuildingCube, StreetCube, HighwayCube가 GridCube위에 올라가 있다면 해당 GridCube위에서 또 생성할 수 없어. 
+
+StreetCube와 HighwayCube는 MainToolButtonGroup의 하위 버튼(각각 ToolButton2, ToolButton3)을 통해 생성할 수 있어. 
