@@ -19,6 +19,8 @@ public class CameraController : MonoBehaviour
     public float edgeScrollSpeed = 10f;     // 엣지 스크롤 속도 (월드 단위/sec)
     public bool edgeScrollUseSmooth = true; // 부드럽게 이동 여부
 
+    public float panPlaneDistance = 20f; // 카메라 앞의 가상 평면까지 거리(Inspector에서 조절)
+
     Camera cam;
     Vector3 panVelocity = Vector3.zero;
     Vector3 targetPosition;
@@ -56,26 +58,61 @@ public class CameraController : MonoBehaviour
         if (isPanning && Input.GetMouseButton(2))
         {
             // UI 위에서 패닝을 막을지 체크
+            // if (blockWhenPointerOverUI && EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
+            // {
+            //     // UI 위에서는 드래그 시작 위치만 갱신하여 갑작스런 점프 방지
+            //     lastMousePos = Input.mousePosition;
+            // }
+            // else
+            // {
+            //     Vector3 delta = Input.mousePosition - lastMousePos;
+            //     lastMousePos = Input.mousePosition;
+
+            //     // 픽셀 단위 델타를 카메라의 오른쪽/위 방향으로 변환
+            //     Vector3 worldDelta = (-cam.transform.right * delta.x + -cam.transform.up * delta.y) * (panSpeed * Time.deltaTime);
+
+            //     targetPosition = transform.position + worldDelta;
+
+            //     if (usePanSmooth)
+            //         transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref panVelocity, panSmoothTime);
+            //     else
+            //         transform.position = targetPosition;
+            // }
+            
+            // UI 위 체크는 기존 코드와 동일하게 유지
             if (blockWhenPointerOverUI && EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
             {
-                // UI 위에서는 드래그 시작 위치만 갱신하여 갑작스런 점프 방지
                 lastMousePos = Input.mousePosition;
             }
             else
             {
-                Vector3 delta = Input.mousePosition - lastMousePos;
-                lastMousePos = Input.mousePosition;
+                // 이전 픽셀 델타 방식 대신, "카메라 전방에 수직인 평면"을 기준으로 스크린->월드 변환
+                Vector3 prevMouse = lastMousePos;
+                Vector3 currMouse = Input.mousePosition;
+                lastMousePos = currMouse;
 
-                // 픽셀 단위 델타를 카메라의 오른쪽/위 방향으로 변환
-                Vector3 worldDelta = (-cam.transform.right * delta.x + -cam.transform.up * delta.y) * (panSpeed * Time.deltaTime);
+                // 카메라 앞에 있는 평면(법선 = camera.forward)
+                Plane dragPlane = new Plane(cam.transform.forward, cam.transform.position + cam.transform.forward * panPlaneDistance);
 
-                targetPosition = transform.position + worldDelta;
+                Ray rPrev = cam.ScreenPointToRay(prevMouse);
+                Ray rCurr = cam.ScreenPointToRay(currMouse);
 
-                if (usePanSmooth)
-                    transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref panVelocity, panSmoothTime);
-                else
-                    transform.position = targetPosition;
+                if (dragPlane.Raycast(rPrev, out float enterPrev) && dragPlane.Raycast(rCurr, out float enterCurr))
+                {
+                    Vector3 worldPrev = rPrev.GetPoint(enterPrev);
+                    Vector3 worldCurr = rCurr.GetPoint(enterCurr);
+
+                    // 화면 상의 이동이 평면 위에서 동일하게 유지되도록 카메라를 worldPrev - worldCurr 만큼 이동
+                    Vector3 worldDelta = worldPrev - worldCurr;
+                    targetPosition = transform.position + worldDelta;
+
+                    if (usePanSmooth)
+                        transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref panVelocity, panSmoothTime);
+                    else
+                        transform.position = targetPosition;
+                }
             }
+            
         }
         else
         {
