@@ -54,9 +54,9 @@ public class RoadManager : MonoBehaviour
     void RecalculateAround(GridCube tile)
     {
         var neighbours = gridSpawner.GetNeighbors(tile, 1); // 8방향 1칸
-        foreach (var g in neighbours)
-            UpdateBuildingInfluence(g);
-        UpdateBuildingInfluence(tile);
+        //foreach (var g in neighbours)
+            //UpdateBuildingInfluence(g);
+        //UpdateBuildingInfluence(tile);
         // 하이웨이 연쇄 영향도 재계산 필요
         RecalculateAllHighwayEffects();
     }
