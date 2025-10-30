@@ -106,6 +106,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8782052970353278075}
+  - component: {fileID: 1787262873427150987}
   m_Layer: 0
   m_Name: Road_Horizontal
   m_TagString: Untagged
@@ -132,6 +133,26 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1787262873427150987
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1951492067563903712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96ff44461a9e87b499c2c8a73cc41c62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gridCube: {fileID: 0}
+  growthMultiplier: 1
+  price: 100
+  growthFactorPerStreet: 1.03228
+  maxStackPerBuilding: 6
+  placedLocalScale: {x: 0.9, y: 0.2, z: 0.9}
+  roadColor: {r: 0.18, g: 0.18, b: 0.18, a: 1}
+  highwayBoosted: 0
 --- !u!1 &2674548159369074820
 GameObject:
   m_ObjectHideFlags: 0
